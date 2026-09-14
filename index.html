@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Regale Invito di Compleanno 👑</title>
+  <title>Regale Invito di Compleanno</title>
+  <!-- Google Fonts per calligrafia e titoli regali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      /* Palette Rosa Macaron & Pastello */
-      --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 35%, #e2ece9 70%, #f4acb7 100%);
-      --envelope-color: #fbcfe8; /* Rosa macaron chiaro */
-      --flap-color: #f472b6;     /* Rosa macaron intenso */
-      --pocket-color: #f9a8d4;   /* Rosa macaron intermedio */
-      --wax-color: #db2777;      /* Ceralacca regale */
-      --text-color: #4a154b;
+      --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 40%, #e2ece9 75%, #f4acb7 100%);
+      --envelope-color: #fbcfe8;
+      --flap-color: #f472b6;
+      --pocket-color: #f9a8d4;
+      --text-color: #3b0764;
+      --accent-gold: #9d174d;
     }
 
     * {
@@ -22,9 +26,8 @@
     }
 
     body {
-      /* Sfondo sfumato effetto acquerello macaron */
       background: var(--bg-gradient);
-      font-family: 'Georgia', serif;
+      font-family: 'Montserrat', sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -36,31 +39,36 @@
 
     .instruction {
       margin-bottom: 25px;
-      font-size: 1.25rem;
-      color: #9d174d;
-      letter-spacing: 1px;
-      font-weight: bold;
-      animation: pulse 1.8s infinite;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--accent-gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
       text-align: center;
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
     }
 
-    /* Contenitore Busta */
-    .envelope-wrapper {
+    /* Contenitore principale */
+    .envelope-container {
       position: relative;
       width: 320px;
-      height: 210px;
+      height: 220px;
+      margin-top: 100px;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
       background-color: var(--envelope-color);
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      box-shadow: 0 15px 35px rgba(219, 39, 119, 0.15);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      box-shadow: 0 15px 35px rgba(157, 23, 77, 0.15);
       cursor: pointer;
-      margin-top: 50px;
     }
 
     /* Lembo Superiore Busta */
-    .envelope-wrapper::before {
-      content: "";
+    .flap {
       position: absolute;
       top: 0;
       left: 0;
@@ -72,105 +80,131 @@
       transform-origin: top;
       transition: transform 0.6s ease-in-out 0.2s, z-index 0.2s 0.2s;
       z-index: 4;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
     }
 
-    /* Tasca Frontale Busta */
-    .pocket {
+    /* Tasche frontali che nascondono la lettera al 100% */
+    .pocket-left {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 0;
       height: 0;
       border-left: 160px solid var(--pocket-color);
-      border-right: 160px solid var(--pocket-color);
-      border-bottom: 110px solid var(--flap-color);
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
+      border-top: 110px solid transparent;
+      border-bottom: 110px solid var(--pocket-color);
+      border-bottom-left-radius: 10px;
       z-index: 3;
     }
 
-    /* Sigillo Ceralacca */
-    .wax-seal {
+    .pocket-right {
       position: absolute;
-      top: 95px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 48px;
-      height: 48px;
-      background-color: var(--wax-color);
-      border-radius: 50%;
-      z-index: 5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-size: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      border: 2px dashed #fbcfe8;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-right: 160px solid var(--pocket-color);
+      border-top: 110px solid transparent;
+      border-bottom: 110px solid var(--pocket-color);
+      border-bottom-right-radius: 10px;
+      z-index: 3;
     }
 
-    /* Il Biglietto d'Invito (Completamente nascosto all'inizio) */
+    .pocket-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-bottom: 105px solid #f472b6;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      z-index: 3;
+    }
+
+    /* Sigillo in Ceralacca Realistico con Fiocco */
+    .wax-seal {
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 58px;
+      height: 58px;
+      z-index: 5;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+    }
+
+    .wax-seal svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Il Biglietto d'Invito */
     .letter {
       position: absolute;
-      top: 5px;
+      top: 0;
       left: 15px;
       width: 290px;
-      height: 195px;
-      background: rgba(255, 255, 255, 0.92);
-      border-radius: 10px;
-      padding: 18px 15px;
+      height: 205px;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 22px 18px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      transition: transform 0.8s ease-in-out, z-index 0.1s ease 0.4s, opacity 0.4s ease;
-      z-index: 1; /* Sotto la tasca e il lembo */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.8s ease-in-out, z-index 0.1s ease 0.4s;
+      z-index: 2; /* Inizialmente dentro la busta */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 2px solid #f472b6;
+      border: 1px solid #f472b6;
       color: var(--text-color);
-      opacity: 0; /* Nascosto inizialmente */
-      overflow: hidden;
-    }
-
-    .letter .crown {
-      font-size: 1.5rem;
     }
 
     .letter h1 {
-      font-size: 1.1rem;
-      color: #831843;
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      color: #701a75;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 4px 0;
-      font-weight: bold;
+      margin-bottom: 6px;
     }
 
-    .letter p {
-      font-size: 0.8rem;
+    .letter .subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
       line-height: 1.4;
-      font-style: italic;
+      font-weight: 300;
     }
 
     .letter .details {
-      background: #fdf2f8;
-      padding: 8px;
-      border-radius: 8px;
-      margin: 8px 0;
-      border: 1px dashed #f472b6;
-      font-size: 0.82rem;
-      font-style: normal;
+      background: #faf5ff;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+      border: 1px dashed #d8b4fe;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .letter .quote {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.35rem;
+      color: var(--accent-gold);
+      line-height: 1.2;
     }
 
     .letter .note {
-      font-size: 0.7rem;
-      color: #701a75;
+      font-size: 0.68rem;
+      color: #6b21a8;
       margin-top: 4px;
+      font-style: italic;
     }
 
-    /* ANIMAZIONE APERTURA BUSTA */
-    .envelope-wrapper.open::before {
+    /* APERTURA ANIMATA */
+    .envelope-wrapper.open .flap {
       transform: rotateX(180deg);
       z-index: 1;
     }
@@ -182,64 +216,80 @@
     }
 
     .envelope-wrapper.open .letter {
-      opacity: 1;
-      transform: translateY(-160px);
-      height: 350px; /* Esce verso l'alto e si ingrandisce */
-      z-index: 10;   /* Va SOPRA la busta */
+      /* Scivola verso l'alto ed esce dalla busta */
+      transform: translateY(-210px);
+      height: 390px;
+      z-index: 10; /* Va in primissimo piano */
     }
 
-    /* Brillantini e Scia Magica */
+    /* Brillantini Magici */
     .sparkle {
       position: absolute;
       pointer-events: none;
-      background: radial-gradient(circle, #fff 20%, #f472b6 100%);
+      background: radial-gradient(circle, #fff 10%, #f472b6 100%);
       border-radius: 50%;
       animation: animateSparkle 1s linear forwards;
       z-index: 20;
     }
 
     @keyframes animateSparkle {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(var(--dx), var(--dy)) scale(0);
-        opacity: 0;
-      }
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.03); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <div class="instruction" id="text-hint">👑 Clicca per aprire il Regale Decreto 👑</div>
+  <div class="instruction" id="text-hint">Partecipazione al Regale Evento</div>
 
-  <div class="envelope-wrapper" id="envelope">
-    <div class="wax-seal">👑</div>
-    <div class="pocket"></div>
-    
-    <div class="letter">
-      <div>
-        <div class="crown">👑✨</div>
-        <h1>Per Regale Decreto</h1>
-        <p>Siete ufficialmente invitati al raffinato <strong>Brunch di Compleanno</strong> in mio onore.</p>
-      </div>
+  <div class="envelope-container">
+    <div class="envelope-wrapper" id="envelope">
       
-      <div class="details">
-        <p>📅 <strong>Giorno di Gala:</strong> Domenica 20 Settembre</p>
-        <p>📍 <strong>Residenza:</strong> Reggia Celeste a Vittime di Peteano, Reame di Fiumicello</p>
-        <p>⏰ <strong>Ora d'Inizio:</strong> 10:30</p>
+      <!-- Sigillo Ceralacca Rosa Vettoriale con Fiocco -->
+      <div class="wax-seal">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 5 C75 3, 95 20, 93 45 C96 70, 78 95, 50 93 C22 96, 4 75, 7 50 C3 25, 25 7, 50 5 Z" fill="#e89cae" stroke="#d47a91" stroke-width="2"/>
+          <circle cx="50" cy="50" r="36" fill="none" stroke="#f6c1cd" stroke-width="2"/>
+          <!-- Fiocco inciso -->
+          <g fill="none" stroke="#b04b64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M50 47 C43 37, 28 36, 32 49 C35 58, 48 51, 50 49" />
+            <path d="M50 47 C57 37, 72 36, 68 49 C65 58, 52 51, 50 49" />
+            <circle cx="50" cy="48" r="4" fill="#b04b64" />
+            <path d="M47 52 L36 68 C39 67, 44 64, 48 56" />
+            <path d="M53 52 L64 68 C61 67, 56 64, 52 56" />
+          </g>
+        </svg>
       </div>
 
-      <div>
-        <p style="margin-bottom: 4px;">✨ <em>«L'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»</em> ✨</p>
-        <p class="note">Un messo reale farà visita alle vostre dimore per raccogliere la risposta... ma nell'attesa, è gradita una conferma via messaggistica di corte! 😉</p>
+      <div class="flap"></div>
+      <div class="pocket-left"></div>
+      <div class="pocket-right"></div>
+      <div class="pocket-bottom"></div>
+      
+      <!-- Biglietto d'Invito -->
+      <div class="letter">
+        <div>
+          <h1>Per Regale Decreto</h1>
+          <p class="subtitle">Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.</p>
+        </div>
+        
+        <div class="details">
+          <p><strong>Data:</strong> Domenica 20 Settembre</p>
+          <p><strong>Luogo:</strong> Reggia Celeste a Vittime di Peteano, Reame di Fiumicello</p>
+          <p><strong>Ora d'Inizio:</strong> 10:30</p>
+        </div>
+
+        <div>
+          <p class="quote">«L'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»</p>
+          <p class="note">Un messo reale raccoglierà la vostra risposta... ma nell'attesa, è gradita la conferma via chat di corte.</p>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -249,40 +299,35 @@
 
     envelope.addEventListener('click', (e) => {
       envelope.classList.toggle('open');
-      
-      // Crea scia di brillantini magici
       createSparkles(e);
 
       if (envelope.classList.contains('open')) {
-        hint.textContent = '✨ Vostra Altezza vi ringrazia ✨';
+        hint.textContent = 'Vostra Altezza vi ringrazia';
       } else {
-        hint.textContent = '👑 Clicca per aprire il Regale Decreto 👑';
+        hint.textContent = 'Partecipazione al Regale Evento';
       }
     });
 
     function createSparkles(e) {
-      const count = 30; // Numero di brillantini
+      const count = 25;
       for (let i = 0; i < count; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
         
-        const size = Math.random() * 8 + 4; // Dimensione casule
+        const size = Math.random() * 6 + 3;
         sparkle.style.width = `${size}px`;
         sparkle.style.height = `${size}px`;
 
-        // Posizione iniziale attorno al punto del click
         sparkle.style.left = `${e.clientX || window.innerWidth/2}px`;
         sparkle.style.top = `${e.clientY || window.innerHeight/2}px`;
 
-        // Direzione casuale della scia
-        const dx = (Math.random() - 0.5) * 200;
-        const dy = (Math.random() - 0.5) * 200;
+        const dx = (Math.random() - 0.5) * 180;
+        const dy = (Math.random() - 0.5) * 180;
         sparkle.style.setProperty('--dx', `${dx}px`);
         sparkle.style.setProperty('--dy', `${dy}px`);
 
         document.body.appendChild(sparkle);
 
-        // Rimuove i brillantini dopo l'animazione
         setTimeout(() => {
           sparkle.remove();
         }, 1000);
