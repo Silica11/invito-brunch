@@ -4,17 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Regale Invito di Compleanno</title>
-  <!-- Google Fonts per calligrafia e titoli regali -->
+  
+  <!-- Google Fonts: Font Calligrafico e Corsivo da Castello/Principessa -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
   
   <style>
     :root {
       /* Sfondo della pagina */
       --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 40%, #e2ece9 75%, #f4acb7 100%);
-      --text-color: #3b0764;
-      --accent-gold: #9d174d;
+      --text-color: #4c1d95;
+      --accent-pink: #db2777;
     }
 
     * {
@@ -25,7 +26,7 @@
 
     body {
       background: var(--bg-gradient);
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Dancing Script', cursive;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -37,13 +38,14 @@
 
     .instruction {
       margin-bottom: 25px;
-      font-family: 'Cinzel', serif;
-      font-size: 1rem;
-      color: var(--accent-gold);
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-pink);
+      letter-spacing: 1px;
       animation: pulse 2s infinite;
       text-align: center;
+      text-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
     }
 
     /* Contenitore Pergamena */
@@ -56,7 +58,7 @@
       align-items: center;
     }
 
-    /* Rotolo Superiore (Senza cerchi laterali) */
+    /* Rotolo Superiore */
     .top-roll-container {
       width: 350px;
       height: 38px;
@@ -97,7 +99,7 @@
       );
     }
 
-    /* Rotolo Inferiore (Senza cerchi laterali) */
+    /* Rotolo Inferiore */
     .bottom-roll-container {
       width: 350px;
       height: 42px;
@@ -114,7 +116,7 @@
       border-top: 2px solid #3d2310;
     }
 
-    /* Sigillo di Ceralacca Rosso con Cordoncini */
+    /* Sigillo in Ceralacca ROSA con Fiocco */
     .wax-seal-wrapper {
       position: absolute;
       top: 50%;
@@ -128,46 +130,82 @@
       pointer-events: none;
     }
 
-    /* Cordoncino che spunta sotto la ceralacca */
-    .wax-ribbon {
-      width: 4px;
-      height: 45px;
-      background: linear-gradient(180deg, #b91c1c, #7f1d1d);
-      box-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+    /* Nastro e Fiocco Rosa */
+    .ribbon-bow {
       position: absolute;
-      top: 20px;
-    }
-    .wax-ribbon.left {
-      transform: rotate(-8deg);
-      left: -4px;
-    }
-    .wax-ribbon.right {
-      transform: rotate(8deg);
-      right: -4px;
+      top: -16px;
+      width: 60px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Medaglione in Ceralacca */
-    .wax-seal {
-      width: 48px;
-      height: 48px;
-      background: radial-gradient(circle at 35% 35%, #ef4444 0%, #991b1b 60%, #450a0a 100%);
+    .bow-loop {
+      width: 24px;
+      height: 18px;
+      background: linear-gradient(135deg, #f472b6, #db2777);
+      border-radius: 50% 50% 10% 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .bow-loop.left {
+      transform: rotate(-15deg) scaleX(-1);
+    }
+    .bow-loop.right {
+      transform: rotate(15deg);
+    }
+
+    .bow-center {
+      width: 12px;
+      height: 12px;
+      background: #be185d;
       border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(255, 255, 255, 0.4);
+      position: absolute;
+      z-index: 2;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* Nastro che scende dal fiocco */
+    .wax-ribbon-tail {
+      width: 6px;
+      height: 50px;
+      background: linear-gradient(180deg, #f472b6, #9d174d);
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.25);
+      position: absolute;
+      top: 10px;
+      border-radius: 2px;
+    }
+    .wax-ribbon-tail.left {
+      transform: rotate(-12deg);
+      left: 10px;
+    }
+    .wax-ribbon-tail.right {
+      transform: rotate(12deg);
+      right: 10px;
+    }
+
+    /* Ceralacca Rosa Metallizzata / Brillante */
+    .wax-seal {
+      width: 52px;
+      height: 52px;
+      background: radial-gradient(circle at 35% 35%, #fbcfe8 0%, #f472b6 40%, #be185d 85%, #831843 100%);
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 0 8px rgba(255, 255, 255, 0.6);
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
-      border: 2px solid #7f1d1d;
+      border: 2px solid #9d174d;
+      margin-top: 5px;
     }
 
     .wax-seal::after {
-      content: '★';
-      color: #fef08a;
-      font-size: 20px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      content: '👑';
+      font-size: 22px;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
     }
 
-    /* Contenuto del Testo */
+    /* CONTENUTO TESTO CON FONT SCRITTURA A MANO REGALE */
     .scroll-content {
       text-align: center;
       color: var(--text-color);
@@ -176,56 +214,59 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      font-family: 'Dancing Script', cursive;
     }
 
     .scroll-content h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.15rem;
-      color: #581c87;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-family: 'Alex Brush', cursive;
+      font-size: 2.2rem;
+      color: #6b21a8;
+      font-weight: normal;
       min-height: 1.4em;
       text-shadow: 0 0 1px rgba(255,255,255,0.8);
+      line-height: 1.2;
     }
 
     .scroll-content .subtitle {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.8rem;
-      line-height: 1.4;
-      font-weight: 400;
-      min-height: 2.8em;
+      font-size: 1.25rem;
+      line-height: 1.3;
+      font-weight: 600;
+      color: #4c1d95;
+      min-height: 2.6em;
     }
 
     .scroll-content .details {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 12px;
-      border-radius: 6px;
-      margin: 10px 0;
-      border: 1px dashed #c084fc;
-      font-size: 0.82rem;
-      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.88);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin: 8px 0;
+      border: 1px dashed #f472b6;
+      font-size: 1.15rem;
+      line-height: 1.5;
       min-height: 80px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      font-weight: 600;
     }
 
     .scroll-content .quote {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.4rem;
-      color: #9d174d;
+      font-size: 1.5rem;
+      color: #be185d;
       line-height: 1.3;
-      min-height: 2.6em;
+      min-height: 2.4em;
     }
 
     .scroll-content .note {
-      font-size: 0.75rem;
-      color: #6b21a8;
+      font-size: 1.1rem;
+      color: #7e22ce;
       font-style: italic;
       min-height: 1.8em;
+      font-weight: 600;
     }
 
     /* STATO APERTO DELLA PERGAMENA */
     .scroll-container.open .scroll-paper {
-      height: 420px;
+      height: 440px;
     }
 
     .scroll-container.open .wax-seal-wrapper {
@@ -284,10 +325,15 @@
       <div class="top-roll"></div>
     </div>
 
-    <!-- Sigillo in Ceralacca -->
+    <!-- Sigillo in Ceralacca Rosa con Fiocco -->
     <div class="wax-seal-wrapper">
-      <div class="wax-ribbon left"></div>
-      <div class="wax-ribbon right"></div>
+      <div class="ribbon-bow">
+        <div class="bow-loop left"></div>
+        <div class="bow-center"></div>
+        <div class="bow-loop right"></div>
+      </div>
+      <div class="wax-ribbon-tail left"></div>
+      <div class="wax-ribbon-tail right"></div>
       <div class="wax-seal"></div>
     </div>
 
@@ -332,7 +378,7 @@
     let typeTimeouts = [];
 
     scrollContainer.addEventListener('click', (e) => {
-      // Se è già aperta, non fa nulla (non si richiude)
+      // Se è già aperta, rimane aperta
       if (isOpen) return;
 
       isOpen = true;
