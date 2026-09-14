@@ -56,7 +56,7 @@
       align-items: center;
     }
 
-    /* Rotolo di Carta Superiore (Piegato a spirale come foto) */
+    /* Rotolo Superiore (Senza cerchi laterali) */
     .top-roll-container {
       width: 350px;
       height: 38px;
@@ -67,29 +67,13 @@
     .top-roll {
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at center, #fff8ee 0%, #d5b38a 60%, #5c3a1e 100%);
-      border-radius: 20px 20px 8px 8px;
+      background: linear-gradient(180deg, #5c3a1e 0%, #d5b38a 40%, #fff8ee 70%, #5c3a1e 100%);
+      border-radius: 18px 18px 8px 8px;
       box-shadow: 0 5px 10px rgba(0,0,0,0.25);
       border-bottom: 2px solid #3d2310;
-      position: relative;
-      overflow: hidden;
     }
 
-    /* Effetto spirale rotolo alto sinistra */
-    .top-roll::before {
-      content: '';
-      position: absolute;
-      left: 10px;
-      top: 4px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 3px solid #3d2310;
-      background: radial-gradient(circle, #4a2c14 30%, #a67c52 80%);
-      box-shadow: inset 0 0 5px #000;
-    }
-
-    /* Foglio centrale con bordi bruciati e bianco sporco interno */
+    /* Foglio centrale con bordi bruciati e interno bianco sporco */
     .scroll-paper {
       position: relative;
       width: 320px;
@@ -99,7 +83,7 @@
       border-right: 2px solid #5c3b1e;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2), inset 0 0 15px rgba(60, 35, 15, 0.4);
       overflow: hidden;
-      /* Srotolamento lento */
+      /* Srotolamento */
       transition: height 2s cubic-bezier(0.25, 1, 0.5, 1);
       display: flex;
       flex-direction: column;
@@ -113,7 +97,7 @@
       );
     }
 
-    /* Rotolo Inferiore (Stile acquerello tridimensionale) */
+    /* Rotolo Inferiore (Senza cerchi laterali) */
     .bottom-roll-container {
       width: 350px;
       height: 42px;
@@ -125,52 +109,62 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(180deg, #614022 0%, #c49a6c 40%, #e2caaa 70%, #4a2e16 100%);
-      border-radius: 10px 10px 22px 22px;
+      border-radius: 8px 8px 20px 20px;
       box-shadow: 0 8px 15px rgba(0,0,0,0.3);
       border-top: 2px solid #3d2310;
-      position: relative;
     }
 
-    .bottom-roll::before {
-      content: '';
-      position: absolute;
-      left: 12px;
-      bottom: 5px;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 3px solid #2d180a;
-      background: radial-gradient(circle, #3d2310 20%, #a67c52 80%);
-      box-shadow: inset 0 0 5px #000;
-    }
-
-    /* Cordoncino Verticale Rosa Pastello */
-    .cord {
+    /* Sigillo di Ceralacca Rosso con Cordoncini */
+    .wax-seal-wrapper {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 14px;
-      height: 65px;
-      background: linear-gradient(90deg, #fbcfe8, #f472b6, #fbcfe8);
-      border-radius: 7px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
       z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       transition: opacity 0.5s ease, transform 0.5s ease;
-      border: 1px solid #f472b6;
+      pointer-events: none;
     }
 
-    .cord::after {
-      content: '';
+    /* Cordoncino che spunta sotto la ceralacca */
+    .wax-ribbon {
+      width: 4px;
+      height: 45px;
+      background: linear-gradient(180deg, #b91c1c, #7f1d1d);
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.3);
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 22px;
-      height: 14px;
-      background: #f472b6;
+      top: 20px;
+    }
+    .wax-ribbon.left {
+      transform: rotate(-8deg);
+      left: -4px;
+    }
+    .wax-ribbon.right {
+      transform: rotate(8deg);
+      right: -4px;
+    }
+
+    /* Medaglione in Ceralacca */
+    .wax-seal {
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(circle at 35% 35%, #ef4444 0%, #991b1b 60%, #450a0a 100%);
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(255, 255, 255, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      border: 2px solid #7f1d1d;
+    }
+
+    .wax-seal::after {
+      content: '★';
+      color: #fef08a;
+      font-size: 20px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
 
     /* Contenuto del Testo */
@@ -223,21 +217,20 @@
     }
 
     .scroll-content .note {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       color: #6b21a8;
       font-style: italic;
-      min-height: 2em;
+      min-height: 1.8em;
     }
 
     /* STATO APERTO DELLA PERGAMENA */
     .scroll-container.open .scroll-paper {
-      height: 430px;
+      height: 420px;
     }
 
-    .scroll-container.open .cord {
+    .scroll-container.open .wax-seal-wrapper {
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.3);
-      pointer-events: none;
     }
 
     /* Micro-Brillantini Densi Bianco/Oro Perlato Luminosissimi */
@@ -291,8 +284,12 @@
       <div class="top-roll"></div>
     </div>
 
-    <!-- Cordoncino Verticale Rosa Pastello -->
-    <div class="cord"></div>
+    <!-- Sigillo in Ceralacca -->
+    <div class="wax-seal-wrapper">
+      <div class="wax-ribbon left"></div>
+      <div class="wax-ribbon right"></div>
+      <div class="wax-seal"></div>
+    </div>
 
     <!-- Foglio della Pergamena -->
     <div class="scroll-paper">
@@ -328,14 +325,14 @@
       { id: 'text-sub', content: 'Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.' },
       { id: 'text-det', content: '<strong>Data:</strong> Domenica 20 Settembre<br><strong>Luogo:</strong> Reggia Celeste a Vittime di Peteano, Reame di Fiumicello<br><strong>Ora d\'Inizio:</strong> 10:30' },
       { id: 'text-quo', content: '«L\'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»' },
-      { id: 'text-not', content: 'Un messo reale raccoglierà la vostra risposta... ma nell\'attesa, è gradita la conferma via chat di corte.' }
+      { id: 'text-not', content: 'Un messo reale raccoglierà la vostra risposta.' }
     ];
 
     let isOpen = false;
     let typeTimeouts = [];
 
     scrollContainer.addEventListener('click', (e) => {
-      // Se è già aperta, non fa nulla (impossibile da richiudere)
+      // Se è già aperta, non fa nulla (non si richiude)
       if (isOpen) return;
 
       isOpen = true;
@@ -343,13 +340,13 @@
       createSparkles(e);
       hint.textContent = 'Vostra Altezza vi ringrazia';
       
-      // Avvia la scrittura magica dopo lo srotolamento (2 sec)
+      // Avvia la scrittura magica dopo lo srotolamento (1.9 sec)
       setTimeout(() => {
         startMagicTyping();
       }, 1900);
     });
 
-    // Scrittura Magica con Micro-Scintille Dense Bianco/Oro Perlato
+    // Scrittura Magica con Micro-Scintille Dense
     function startMagicTyping() {
       let sectionIndex = 0;
 
