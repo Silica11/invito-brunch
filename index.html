@@ -11,11 +11,8 @@
   
   <style>
     :root {
-      /* Sfondo Macaron / Pastello */
+      /* Sfondo della pagina */
       --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 40%, #e2ece9 75%, #f4acb7 100%);
-      --scroll-paper: #fcf8f2;   /* Colore guscio d'uovo / pergamena */
-      --scroll-border: #e8d5c4;  /* Bordo sfumato pergamena */
-      --pastel-pink-cord: #f4a261;
       --text-color: #3b0764;
       --accent-gold: #9d174d;
     }
@@ -52,57 +49,99 @@
     /* Contenitore Pergamena */
     .scroll-container {
       position: relative;
-      width: 320px;
+      width: 330px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Rotoli di carta arrotolata in alto e in basso */
-    .paper-roll {
-      width: 340px;
-      height: 28px;
-      background: linear-gradient(180deg, #e3d2be 0%, #f7eee1 50%, #d8c2aa 100%);
-      border-radius: 14px / 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    /* Rotolo di Carta Superiore (Piegato a spirale come foto) */
+    .top-roll-container {
+      width: 350px;
+      height: 38px;
       position: relative;
-      z-index: 5;
-      border: 1px solid #d4beaa;
+      z-index: 6;
     }
 
-    /* Spirale laterale per simulare il foglio arrotolato */
-    .paper-roll::before, .paper-roll::after {
+    .top-roll {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, #fff8ee 0%, #d5b38a 60%, #5c3a1e 100%);
+      border-radius: 20px 20px 8px 8px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+      border-bottom: 2px solid #3d2310;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Effetto spirale rotolo alto sinistra */
+    .top-roll::before {
       content: '';
       position: absolute;
-      top: 2px;
-      width: 14px;
-      height: 22px;
+      left: 10px;
+      top: 4px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 2px solid #b89f88;
-      background: #ebd8c5;
+      border: 3px solid #3d2310;
+      background: radial-gradient(circle, #4a2c14 30%, #a67c52 80%);
+      box-shadow: inset 0 0 5px #000;
     }
-    .paper-roll::before { left: 4px; }
-    .paper-roll::after { right: 4px; }
 
-    /* Foglio centrale che si srotola */
+    /* Foglio centrale con bordi bruciati e bianco sporco interno */
     .scroll-paper {
       position: relative;
-      width: 310px;
-      height: 0px; /* Da chiusa le due estremità si toccano */
-      background-color: var(--scroll-paper);
-      background-image: radial-gradient(#f3e9dc 1px, transparent 1px);
-      background-size: 16px 16px;
-      border-left: 3px double var(--scroll-border);
-      border-right: 3px double var(--scroll-border);
-      box-shadow: inset 0 0 20px rgba(216, 194, 170, 0.3);
+      width: 320px;
+      height: 0px; /* Da chiusa le estremità si toccano */
+      background: radial-gradient(circle at center, #ffffff 10%, #fefcf7 50%, #f3e5ce 80%, #a87948 95%, #4a2e16 100%);
+      border-left: 2px solid #5c3b1e;
+      border-right: 2px solid #5c3b1e;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2), inset 0 0 15px rgba(60, 35, 15, 0.4);
       overflow: hidden;
-      /* Srotolamento rallentato a 2 secondi per maggiore imponenza */
+      /* Srotolamento lento */
       transition: height 2s cubic-bezier(0.25, 1, 0.5, 1);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 0 20px;
+      padding: 0 25px;
+      /* Bordo irregolare/bruciacchiato tramite clip-path */
+      clip-path: polygon(
+        0% 0%, 100% 0%, 
+        98% 15%, 100% 30%, 97% 45%, 100% 60%, 98% 75%, 100% 90%, 99% 100%,
+        1% 100%, 2% 85%, 0% 70%, 3% 55%, 0% 40%, 2% 25%, 0% 10%
+      );
+    }
+
+    /* Rotolo Inferiore (Stile acquerello tridimensionale) */
+    .bottom-roll-container {
+      width: 350px;
+      height: 42px;
+      position: relative;
+      z-index: 6;
+    }
+
+    .bottom-roll {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #614022 0%, #c49a6c 40%, #e2caaa 70%, #4a2e16 100%);
+      border-radius: 10px 10px 22px 22px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      border-top: 2px solid #3d2310;
+      position: relative;
+    }
+
+    .bottom-roll::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      bottom: 5px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 3px solid #2d180a;
+      background: radial-gradient(circle, #3d2310 20%, #a67c52 80%);
+      box-shadow: inset 0 0 5px #000;
     }
 
     /* Cordoncino Verticale Rosa Pastello */
@@ -112,16 +151,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       width: 14px;
-      height: 58px;
+      height: 65px;
       background: linear-gradient(90deg, #fbcfe8, #f472b6, #fbcfe8);
       border-radius: 7px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
       z-index: 10;
       transition: opacity 0.5s ease, transform 0.5s ease;
       border: 1px solid #f472b6;
     }
 
-    /* Fiocchetto rosa pastello al centro del cordoncino */
     .cord::after {
       content: '';
       position: absolute;
@@ -132,7 +170,7 @@
       height: 14px;
       background: #f472b6;
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     /* Contenuto del Testo */
@@ -148,42 +186,44 @@
 
     .scroll-content h1 {
       font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      color: #701a75;
+      font-size: 1.15rem;
+      color: #581c87;
       letter-spacing: 2px;
       text-transform: uppercase;
       min-height: 1.4em;
+      text-shadow: 0 0 1px rgba(255,255,255,0.8);
     }
 
     .scroll-content .subtitle {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.8rem;
       line-height: 1.4;
-      font-weight: 300;
+      font-weight: 400;
       min-height: 2.8em;
     }
 
     .scroll-content .details {
-      background: rgba(250, 245, 255, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       padding: 12px;
       border-radius: 6px;
       margin: 10px 0;
-      border: 1px dashed #d8b4fe;
+      border: 1px dashed #c084fc;
       font-size: 0.82rem;
       line-height: 1.6;
       min-height: 80px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .scroll-content .quote {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.35rem;
-      color: var(--accent-gold);
+      font-size: 1.4rem;
+      color: #9d174d;
       line-height: 1.3;
       min-height: 2.6em;
     }
 
     .scroll-content .note {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: #6b21a8;
       font-style: italic;
       min-height: 2em;
@@ -191,7 +231,7 @@
 
     /* STATO APERTO DELLA PERGAMENA */
     .scroll-container.open .scroll-paper {
-      height: 420px;
+      height: 430px;
     }
 
     .scroll-container.open .cord {
@@ -200,22 +240,22 @@
       pointer-events: none;
     }
 
-    /* Micro-Brillantini Densi Bianco/Oro Perlato per la scrittura */
+    /* Micro-Brillantini Densi Bianco/Oro Perlato Luminosissimi */
     .magic-sparkle {
       position: fixed;
       pointer-events: none;
       width: 4px;
       height: 4px;
-      background: radial-gradient(circle, #ffffff 30%, #fef08a 70%, #f59e0b 100%);
+      background: radial-gradient(circle, #ffffff 40%, #fef08a 80%, #f59e0b 100%);
       border-radius: 50%;
-      box-shadow: 0 0 4px #ffffff, 0 0 8px #fef08a;
+      box-shadow: 0 0 6px #ffffff, 0 0 10px #fef08a, 0 0 14px #fbbf24;
       animation: magicGlow 0.45s ease-out forwards;
       z-index: 100;
     }
 
     @keyframes magicGlow {
       0% { transform: scale(0.4) rotate(0deg); opacity: 1; }
-      50% { transform: scale(1.6) rotate(180deg); opacity: 0.9; }
+      50% { transform: scale(1.8) rotate(180deg); opacity: 1; }
       100% { transform: scale(0) rotate(360deg); opacity: 0; }
     }
 
@@ -247,7 +287,9 @@
   <div class="scroll-container" id="scroll">
     
     <!-- Rotolo Superiore -->
-    <div class="paper-roll"></div>
+    <div class="top-roll-container">
+      <div class="top-roll"></div>
+    </div>
 
     <!-- Cordoncino Verticale Rosa Pastello -->
     <div class="cord"></div>
@@ -271,7 +313,9 @@
     </div>
 
     <!-- Rotolo Inferiore -->
-    <div class="paper-roll"></div>
+    <div class="bottom-roll-container">
+      <div class="bottom-roll"></div>
+    </div>
 
   </div>
 
@@ -287,38 +331,30 @@
       { id: 'text-not', content: 'Un messo reale raccoglierà la vostra risposta... ma nell\'attesa, è gradita la conferma via chat di corte.' }
     ];
 
-    let isTyping = false;
+    let isOpen = false;
     let typeTimeouts = [];
 
     scrollContainer.addEventListener('click', (e) => {
+      // Se è già aperta, non fa nulla (impossibile da richiudere)
+      if (isOpen) return;
+
+      isOpen = true;
+      scrollContainer.classList.add('open');
       createSparkles(e);
-
-      if (!scrollContainer.classList.contains('open')) {
-        scrollContainer.classList.add('open');
-        hint.textContent = 'Vostra Altezza vi ringrazia';
-        
-        // Attende la conclusione dello srotolamento lento (2 sec) per far partire la scrittura magica
-        setTimeout(() => {
-          startMagicTyping();
-        }, 1900);
-
-      } else {
-        scrollContainer.classList.remove('open');
-        hint.textContent = 'Partecipazione al Regale Evento';
-        resetTyping();
-      }
+      hint.textContent = 'Vostra Altezza vi ringrazia';
+      
+      // Avvia la scrittura magica dopo lo srotolamento (2 sec)
+      setTimeout(() => {
+        startMagicTyping();
+      }, 1900);
     });
 
     // Scrittura Magica con Micro-Scintille Dense Bianco/Oro Perlato
     function startMagicTyping() {
-      resetTyping();
-      isTyping = true;
-
       let sectionIndex = 0;
 
       function typeNextSection() {
         if (sectionIndex >= texts.length) {
-          isTyping = false;
           return;
         }
 
@@ -337,7 +373,7 @@
 
             elem.innerHTML = rawHTML.substring(0, charIndex);
 
-            // Genera una nuvoletta densa di 3 micro-brillantini dorati/bianchi per ogni lettera
+            // Genera micro-brillantini dorati/bianchi per ogni lettera
             if (charIndex > 0 && charIndex <= rawHTML.length) {
               spawnCharSparkles(elem, 3);
             }
@@ -358,15 +394,6 @@
       typeNextSection();
     }
 
-    function resetTyping() {
-      typeTimeouts.forEach(t => clearTimeout(t));
-      typeTimeouts = [];
-      texts.forEach(sec => {
-        document.getElementById(sec.id).innerHTML = '';
-      });
-      isTyping = false;
-    }
-
     // Generatore di Micro-Brillantini Densi vicino al punto di scrittura
     function spawnCharSparkles(element, count) {
       const rect = element.getBoundingClientRect();
@@ -375,7 +402,6 @@
         const sparkle = document.createElement('div');
         sparkle.classList.add('magic-sparkle');
 
-        // Piccola dispersione attorno alla lettera stampata
         const offsetX = (Math.random() - 0.5) * 16;
         const offsetY = (Math.random() - 0.5) * 12;
 
@@ -399,7 +425,7 @@
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
         
-        const size = Math.random() * 4 + 2; // Brillantini più piccoli
+        const size = Math.random() * 4 + 2;
         sparkle.style.width = `${size}px`;
         sparkle.style.height = `${size}px`;
 
