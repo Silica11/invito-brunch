@@ -11,10 +11,11 @@
   
   <style>
     :root {
+      /* Sfondo Macaron / Pastello */
       --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 40%, #e2ece9 75%, #f4acb7 100%);
-      --envelope-color: #fbcfe8;
-      --flap-color: #f472b6;
-      --pocket-color: #f9a8d4;
+      --scroll-paper: #fcf8f2;   /* Colore guscio d'uovo / pergamena */
+      --scroll-border: #e8d5c4;  /* Bordo sfumato pergamena */
+      --wood-roller: #d4a373;    /* Estremità pergamena */
       --text-color: #3b0764;
       --accent-gold: #9d174d;
     }
@@ -48,183 +49,155 @@
       text-align: center;
     }
 
-    /* Contenitore principale */
-    .envelope-container {
+    /* Contenitore Pergamena */
+    .scroll-container {
       position: relative;
       width: 320px;
-      height: 220px;
-      margin-top: 120px;
-    }
-
-    .envelope-wrapper {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background-color: var(--envelope-color);
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      box-shadow: 0 15px 35px rgba(157, 23, 77, 0.15);
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* Lembo Superiore Busta */
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-top: 115px solid var(--flap-color);
-      transform-origin: top;
-      transition: transform 0.5s ease-in-out, z-index 0.2s;
-      z-index: 5;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
-    }
-
-    /* Tasche frontali che contengono la lettera */
-    .pocket-left {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid var(--pocket-color);
-      border-top: 110px solid transparent;
-      border-bottom: 110px solid var(--pocket-color);
-      border-bottom-left-radius: 10px;
-      z-index: 4;
-    }
-
-    .pocket-right {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 0;
-      height: 0;
-      border-right: 160px solid var(--pocket-color);
-      border-top: 110px solid transparent;
-      border-bottom: 110px solid var(--pocket-color);
-      border-bottom-right-radius: 10px;
-      z-index: 4;
-    }
-
-    .pocket-bottom {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-bottom: 105px solid #f472b6;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      z-index: 4;
-    }
-
-    /* Sigillo in Ceralacca Realistico con Fiocco */
-    .wax-seal {
-      position: absolute;
-      top: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 58px;
-      height: 58px;
-      z-index: 6;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
-    }
-
-    .wax-seal svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Il Biglietto d'Invito */
-    .letter {
-      position: absolute;
-      top: 5px;
-      left: 15px;
-      width: 290px;
-      height: 200px;
-      background: #ffffff;
+    /* Rullo Superiore e Inferiore */
+    .roller {
+      width: 340px;
+      height: 16px;
+      background: linear-gradient(90deg, #b07d4f, #e6c5a5, #b07d4f);
       border-radius: 8px;
-      padding: 22px 18px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      /* Animazione a due fasi: prima sale verticalmente, poi passa sopra la busta */
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s, 
-                  height 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s, 
-                  z-index 0.1s linear 0.5s, 
-                  box-shadow 0.5s ease 0.5s;
-      z-index: 2; /* Inizialmente dentro la busta */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 5;
+    }
+
+    /* Il foglio della pergamena che si srotola */
+    .scroll-paper {
+      position: relative;
+      width: 310px;
+      height: 20px; /* Altezza iniziale da chiusa */
+      background-color: var(--scroll-paper);
+      background-image: radial-gradient(#f3e9dc 1px, transparent 1px);
+      background-size: 16px 16px;
+      border-left: 2px solid var(--scroll-border);
+      border-right: 2px solid var(--scroll-border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 1px solid #f472b6;
-      color: var(--text-color);
+      padding: 0 20px;
     }
 
-    .letter h1 {
+    /* Sigillo Ceralacca Rosa sulla Pergamena Chiusa */
+    .wax-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      z-index: 10;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+    }
+
+    /* Contenuto del Testo (Nascosto all'inizio) */
+    .scroll-content {
+      opacity: 0;
+      padding: 25px 0;
+      text-align: center;
+      color: var(--text-color);
+      transition: opacity 0.3s ease 0.8s; /* Compare dopo che si è srotolata */
+      position: relative;
+    }
+
+    .scroll-content h1 {
       font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: #701a75;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .letter .subtitle {
+    .scroll-content .subtitle {
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       line-height: 1.4;
       font-weight: 300;
     }
 
-    .letter .details {
-      background: #faf5ff;
-      padding: 10px;
-      border-radius: 4px;
-      margin: 10px 0;
+    .scroll-content .details {
+      background: rgba(250, 245, 255, 0.7);
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
       border: 1px dashed #d8b4fe;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       line-height: 1.6;
     }
 
-    .letter .quote {
+    .scroll-content .quote {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       color: var(--accent-gold);
-      line-height: 1.2;
+      line-height: 1.3;
+      margin-bottom: 6px;
     }
 
-    .letter .note {
-      font-size: 0.68rem;
+    .scroll-content .note {
+      font-size: 0.7rem;
       color: #6b21a8;
-      margin-top: 4px;
       font-style: italic;
     }
 
-    /* APERTURA ANIMATED LIKE STOCK VIDEO */
-    .envelope-wrapper.open .flap {
-      transform: rotateX(180deg);
-      z-index: 1; /* Il lembo aperto va dietro il corpo della busta */
+    /* Striscia Luminosa Magica */
+    .magic-beam {
+      position: absolute;
+      top: -60px;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(to bottom, 
+                  transparent 0%, 
+                  rgba(255, 223, 186, 0.8) 50%, 
+                  rgba(244, 114, 182, 0.9) 80%, 
+                  #ffffff 100%);
+      box-shadow: 0 0 15px #f472b6, 0 0 25px #ffd166;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 15;
     }
 
-    .envelope-wrapper.open .wax-seal {
+    /* STATO APERTO DELLA PERGAMENA */
+    .scroll-container.open .scroll-paper {
+      height: 420px; /* Si srotola in verticale */
+    }
+
+    .scroll-container.open .wax-seal {
       opacity: 0;
-      transform: translateX(-50%) scale(0.3);
+      transform: translate(-50%, -50%) scale(0.3);
       pointer-events: none;
     }
 
-    .envelope-wrapper.open .letter {
-      /* Scivola completamente verso l'alto rendendosi visibile ed ingrandendosi */
-      transform: translateY(-130px) scale(1.02);
-      height: 380px;
-      z-index: 10; /* Passa sopra a tutti i componenti della busta */
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    .scroll-container.open .scroll-content {
+      opacity: 1;
+    }
+
+    /* Animazione Striscia Luminosa */
+    .scroll-container.open .magic-beam {
+      animation: beamSweep 1.2s ease-in-out 0.8s forwards;
+    }
+
+    @keyframes beamSweep {
+      0% {
+        top: -50px;
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
     }
 
     /* Brillantini Magici */
@@ -252,10 +225,15 @@
 
   <div class="instruction" id="text-hint">Partecipazione al Regale Evento</div>
 
-  <div class="envelope-container">
-    <div class="envelope-wrapper" id="envelope">
+  <div class="scroll-container" id="scroll">
+    
+    <!-- Rullo Superiore -->
+    <div class="roller"></div>
+
+    <!-- Foglio della Pergamena -->
+    <div class="scroll-paper">
       
-      <!-- Sigillo Ceralacca Rosa Vettoriale con Fiocco -->
+      <!-- Sigillo Ceralacca Rosa -->
       <div class="wax-seal">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <path d="M50 5 C75 3, 95 20, 93 45 C96 70, 78 95, 50 93 C22 96, 4 75, 7 50 C3 25, 25 7, 50 5 Z" fill="#e89cae" stroke="#d47a91" stroke-width="2"/>
@@ -271,17 +249,13 @@
         </svg>
       </div>
 
-      <div class="flap"></div>
-      <div class="pocket-left"></div>
-      <div class="pocket-right"></div>
-      <div class="pocket-bottom"></div>
-      
-      <!-- Biglietto d'Invito -->
-      <div class="letter">
-        <div>
-          <h1>Per Regale Decreto</h1>
-          <p class="subtitle">Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.</p>
-        </div>
+      <!-- Striscia Luminosa che rivela il testo -->
+      <div class="magic-beam"></div>
+
+      <!-- Testo del Decreto -->
+      <div class="scroll-content">
+        <h1>Per Regale Decreto</h1>
+        <p class="subtitle">Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.</p>
         
         <div class="details">
           <p><strong>Data:</strong> Domenica 20 Settembre</p>
@@ -296,17 +270,21 @@
       </div>
 
     </div>
+
+    <!-- Rullo Inferiore -->
+    <div class="roller"></div>
+
   </div>
 
   <script>
-    const envelope = document.getElementById('envelope');
+    const scrollContainer = document.getElementById('scroll');
     const hint = document.getElementById('text-hint');
 
-    envelope.addEventListener('click', (e) => {
-      envelope.classList.toggle('open');
+    scrollContainer.addEventListener('click', (e) => {
+      scrollContainer.classList.toggle('open');
       createSparkles(e);
 
-      if (envelope.classList.contains('open')) {
+      if (scrollContainer.classList.contains('open')) {
         hint.textContent = 'Vostra Altezza vi ringrazia';
       } else {
         hint.textContent = 'Partecipazione al Regale Evento';
