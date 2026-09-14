@@ -53,7 +53,7 @@
       position: relative;
       width: 320px;
       height: 220px;
-      margin-top: 100px;
+      margin-top: 120px;
     }
 
     .envelope-wrapper {
@@ -78,12 +78,12 @@
       border-right: 160px solid transparent;
       border-top: 115px solid var(--flap-color);
       transform-origin: top;
-      transition: transform 0.6s ease-in-out 0.2s, z-index 0.2s 0.2s;
-      z-index: 4;
+      transition: transform 0.5s ease-in-out, z-index 0.2s;
+      z-index: 5;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
     }
 
-    /* Tasche frontali che nascondono la lettera al 100% */
+    /* Tasche frontali che contengono la lettera */
     .pocket-left {
       position: absolute;
       bottom: 0;
@@ -94,7 +94,7 @@
       border-top: 110px solid transparent;
       border-bottom: 110px solid var(--pocket-color);
       border-bottom-left-radius: 10px;
-      z-index: 3;
+      z-index: 4;
     }
 
     .pocket-right {
@@ -107,7 +107,7 @@
       border-top: 110px solid transparent;
       border-bottom: 110px solid var(--pocket-color);
       border-bottom-right-radius: 10px;
-      z-index: 3;
+      z-index: 4;
     }
 
     .pocket-bottom {
@@ -121,7 +121,7 @@
       border-bottom: 105px solid #f472b6;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-      z-index: 3;
+      z-index: 4;
     }
 
     /* Sigillo in Ceralacca Realistico con Fiocco */
@@ -132,8 +132,8 @@
       transform: translateX(-50%);
       width: 58px;
       height: 58px;
-      z-index: 5;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 6;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
     }
 
@@ -145,16 +145,20 @@
     /* Il Biglietto d'Invito */
     .letter {
       position: absolute;
-      top: 0;
+      top: 5px;
       left: 15px;
       width: 290px;
-      height: 205px;
+      height: 200px;
       background: #ffffff;
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 22px 18px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: transform 0.8s ease-in-out, z-index 0.1s ease 0.4s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      /* Animazione a due fasi: prima sale verticalmente, poi passa sopra la busta */
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s, 
+                  height 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s, 
+                  z-index 0.1s linear 0.5s, 
+                  box-shadow 0.5s ease 0.5s;
       z-index: 2; /* Inizialmente dentro la busta */
       display: flex;
       flex-direction: column;
@@ -203,23 +207,24 @@
       font-style: italic;
     }
 
-    /* APERTURA ANIMATA */
+    /* APERTURA ANIMATED LIKE STOCK VIDEO */
     .envelope-wrapper.open .flap {
       transform: rotateX(180deg);
-      z-index: 1;
+      z-index: 1; /* Il lembo aperto va dietro il corpo della busta */
     }
 
     .envelope-wrapper.open .wax-seal {
       opacity: 0;
-      transform: translateX(-50%) scale(0.4);
+      transform: translateX(-50%) scale(0.3);
       pointer-events: none;
     }
 
     .envelope-wrapper.open .letter {
-      /* Scivola verso l'alto ed esce dalla busta */
-      transform: translateY(-210px);
-      height: 390px;
-      z-index: 10; /* Va in primissimo piano */
+      /* Scivola completamente verso l'alto rendendosi visibile ed ingrandendosi */
+      transform: translateY(-130px) scale(1.02);
+      height: 380px;
+      z-index: 10; /* Passa sopra a tutti i componenti della busta */
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
     }
 
     /* Brillantini Magici */
