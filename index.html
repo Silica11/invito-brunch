@@ -15,7 +15,6 @@
       --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 40%, #e2ece9 75%, #f4acb7 100%);
       --scroll-paper: #fcf8f2;   /* Colore guscio d'uovo / pergamena */
       --scroll-border: #e8d5c4;  /* Bordo sfumato pergamena */
-      --wood-roller: #d4a373;    /* Estremità pergamena */
       --text-color: #3b0764;
       --accent-gold: #9d174d;
     }
@@ -59,56 +58,91 @@
       align-items: center;
     }
 
-    /* Rullo Superiore e Inferiore */
-    .roller {
+    /* Rotoli di carta arrotolata in alto e in basso */
+    .paper-roll {
       width: 340px;
-      height: 16px;
-      background: linear-gradient(90deg, #b07d4f, #e6c5a5, #b07d4f);
-      border-radius: 8px;
+      height: 28px;
+      background: linear-gradient(180deg, #e3d2be 0%, #f7eee1 50%, #d8c2aa 100%);
+      border-radius: 14px / 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      position: relative;
       z-index: 5;
+      border: 1px solid #d4beaa;
     }
 
-    /* Il foglio della pergamena che si srotola */
+    /* Spirale laterale per simulare il foglio arrotolato su se stesso */
+    .paper-roll::before, .paper-roll::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      width: 14px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #b89f88;
+      background: #ebd8c5;
+    }
+    .paper-roll::before { left: 4px; }
+    .paper-roll::after { right: 4px; }
+
+    /* Foglio centrale che si srotola */
     .scroll-paper {
       position: relative;
       width: 310px;
-      height: 20px; /* Altezza iniziale da chiusa */
+      height: 0px; /* Da chiusa le due estremità si toccano */
       background-color: var(--scroll-paper);
       background-image: radial-gradient(#f3e9dc 1px, transparent 1px);
       background-size: 16px 16px;
-      border-left: 2px solid var(--scroll-border);
-      border-right: 2px solid var(--scroll-border);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-left: 3px double var(--scroll-border);
+      border-right: 3px double var(--scroll-border);
+      box-shadow: inset 0 0 20px rgba(216, 194, 170, 0.3);
       overflow: hidden;
       transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       padding: 0 20px;
     }
 
-    /* Sigillo Ceralacca Rosa sulla Pergamena Chiusa */
-    .wax-seal {
+    /* Cordoncino attorno alla pergamena chiusa */
+    .cord {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 60px;
-      height: 60px;
+      width: 325px;
+      height: 18px;
+      background: repeating-linear-gradient(
+        45deg,
+        #f472b6,
+        #f472b6 8px,
+        #fbbf24 8px,
+        #fbbf24 16px
+      );
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
       z-index: 10;
       transition: opacity 0.4s ease, transform 0.4s ease;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
     }
 
-    /* Contenuto del Testo (Nascosto all'inizio) */
+    /* Fiocco centrale del cordoncino */
+    .cord::after {
+      content: '🎀';
+      font-size: 22px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+    }
+
+    /* Contenuto del Testo */
     .scroll-content {
-      opacity: 0;
-      padding: 25px 0;
       text-align: center;
       color: var(--text-color);
-      transition: opacity 0.3s ease 0.8s; /* Compare dopo che si è srotolata */
       position: relative;
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
 
     .scroll-content h1 {
@@ -117,7 +151,7 @@
       color: #701a75;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      min-height: 1.4em;
     }
 
     .scroll-content .subtitle {
@@ -125,82 +159,66 @@
       font-size: 0.8rem;
       line-height: 1.4;
       font-weight: 300;
+      min-height: 2.8em;
     }
 
     .scroll-content .details {
-      background: rgba(250, 245, 255, 0.7);
+      background: rgba(250, 245, 255, 0.75);
       padding: 12px;
       border-radius: 6px;
-      margin: 15px 0;
+      margin: 10px 0;
       border: 1px dashed #d8b4fe;
       font-size: 0.82rem;
       line-height: 1.6;
+      min-height: 80px;
     }
 
     .scroll-content .quote {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: var(--accent-gold);
       line-height: 1.3;
-      margin-bottom: 6px;
+      min-height: 2.6em;
     }
 
     .scroll-content .note {
       font-size: 0.7rem;
       color: #6b21a8;
       font-style: italic;
-    }
-
-    /* Striscia Luminosa Magica */
-    .magic-beam {
-      position: absolute;
-      top: -60px;
-      left: 0;
-      width: 100%;
-      height: 50px;
-      background: linear-gradient(to bottom, 
-                  transparent 0%, 
-                  rgba(255, 223, 186, 0.8) 50%, 
-                  rgba(244, 114, 182, 0.9) 80%, 
-                  #ffffff 100%);
-      box-shadow: 0 0 15px #f472b6, 0 0 25px #ffd166;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 15;
+      min-height: 2em;
     }
 
     /* STATO APERTO DELLA PERGAMENA */
     .scroll-container.open .scroll-paper {
-      height: 420px; /* Si srotola in verticale */
+      height: 420px;
     }
 
-    .scroll-container.open .wax-seal {
+    .scroll-container.open .cord {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.3);
+      transform: translate(-50%, -50%) scale(0.5);
       pointer-events: none;
     }
 
-    .scroll-container.open .scroll-content {
-      opacity: 1;
+    /* Brillantino sulla Lettera in corso di Scrittura */
+    .magic-sparkle {
+      position: fixed;
+      pointer-events: none;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, #ffffff 20%, #f472b6 60%, transparent 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #f472b6, 0 0 18px #fbbf24;
+      animation: magicGlow 0.4s ease-out forwards;
+      z-index: 100;
     }
 
-    /* Animazione Striscia Luminosa */
-    .scroll-container.open .magic-beam {
-      animation: beamSweep 1.2s ease-in-out 0.8s forwards;
+    @keyframes magicGlow {
+      0% { transform: scale(0.3) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.8) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0) rotate(360deg); opacity: 0; }
     }
 
-    @keyframes beamSweep {
-      0% {
-        top: -50px;
-        opacity: 1;
-      }
-      100% {
-        top: 100%;
-        opacity: 0;
-      }
-    }
-
-    /* Brillantini Magici */
+    /* Brillantini generici al click */
     .sparkle {
       position: absolute;
       pointer-events: none;
@@ -227,52 +245,32 @@
 
   <div class="scroll-container" id="scroll">
     
-    <!-- Rullo Superiore -->
-    <div class="roller"></div>
+    <!-- Rotolo Superiore -->
+    <div class="paper-roll"></div>
+
+    <!-- Cordoncino -->
+    <div class="cord"></div>
 
     <!-- Foglio della Pergamena -->
     <div class="scroll-paper">
       
-      <!-- Sigillo Ceralacca Rosa -->
-      <div class="wax-seal">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 5 C75 3, 95 20, 93 45 C96 70, 78 95, 50 93 C22 96, 4 75, 7 50 C3 25, 25 7, 50 5 Z" fill="#e89cae" stroke="#d47a91" stroke-width="2"/>
-          <circle cx="50" cy="50" r="36" fill="none" stroke="#f6c1cd" stroke-width="2"/>
-          <!-- Fiocco inciso -->
-          <g fill="none" stroke="#b04b64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M50 47 C43 37, 28 36, 32 49 C35 58, 48 51, 50 49" />
-            <path d="M50 47 C57 37, 72 36, 68 49 C65 58, 52 51, 50 49" />
-            <circle cx="50" cy="48" r="4" fill="#b04b64" />
-            <path d="M47 52 L36 68 C39 67, 44 64, 48 56" />
-            <path d="M53 52 L64 68 C61 67, 56 64, 52 56" />
-          </g>
-        </svg>
-      </div>
-
-      <!-- Striscia Luminosa che rivela il testo -->
-      <div class="magic-beam"></div>
-
-      <!-- Testo del Decreto -->
+      <!-- Contenitore del Testo -->
       <div class="scroll-content">
-        <h1>Per Regale Decreto</h1>
-        <p class="subtitle">Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.</p>
+        <h1 id="text-h1"></h1>
+        <p class="subtitle" id="text-sub"></p>
         
-        <div class="details">
-          <p><strong>Data:</strong> Domenica 20 Settembre</p>
-          <p><strong>Luogo:</strong> Reggia Celeste a Vittime di Peteano, Reame di Fiumicello</p>
-          <p><strong>Ora d'Inizio:</strong> 10:30</p>
-        </div>
+        <div class="details" id="text-det"></div>
 
         <div>
-          <p class="quote">«L'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»</p>
-          <p class="note">Un messo reale raccoglierà la vostra risposta... ma nell'attesa, è gradita la conferma via chat di corte.</p>
+          <p class="quote" id="text-quo"></p>
+          <p class="note" id="text-not"></p>
         </div>
       </div>
 
     </div>
 
-    <!-- Rullo Inferiore -->
-    <div class="roller"></div>
+    <!-- Rotolo Inferiore -->
+    <div class="paper-roll"></div>
 
   </div>
 
@@ -280,19 +278,118 @@
     const scrollContainer = document.getElementById('scroll');
     const hint = document.getElementById('text-hint');
 
+    // Testi divisi per sezione
+    const texts = [
+      { id: 'text-h1', content: 'Per Regale Decreto' },
+      { id: 'text-sub', content: 'Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.' },
+      { id: 'text-det', content: '<strong>Data:</strong> Domenica 20 Settembre<br><strong>Luogo:</strong> Reggia Celeste a Vittime di Peteano, Reame di Fiumicello<br><strong>Ora d\'Inizio:</strong> 10:30' },
+      { id: 'text-quo', content: '«L\'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»' },
+      { id: 'text-not', content: 'Un messo reale raccoglierà la vostra risposta... ma nell\'attesa, è gradita la conferma via chat di corte.' }
+    ];
+
+    let isTyping = false;
+    let typeTimeouts = [];
+
     scrollContainer.addEventListener('click', (e) => {
-      scrollContainer.classList.toggle('open');
       createSparkles(e);
 
-      if (scrollContainer.classList.contains('open')) {
+      if (!scrollContainer.classList.contains('open')) {
+        scrollContainer.classList.add('open');
         hint.textContent = 'Vostra Altezza vi ringrazia';
+        
+        // Avvia la scrittura magica lettera per lettera dopo lo srotolamento (1 sec)
+        setTimeout(() => {
+          startMagicTyping();
+        }, 1000);
+
       } else {
+        scrollContainer.classList.remove('open');
         hint.textContent = 'Partecipazione al Regale Evento';
+        resetTyping();
       }
     });
 
+    // Funzione Scrittura Magica con Brillantini
+    function startMagicTyping() {
+      resetTyping();
+      isTyping = true;
+
+      let sectionIndex = 0;
+
+      function typeNextSection() {
+        if (sectionIndex >= texts.length) {
+          isTyping = false;
+          return;
+        }
+
+        const sec = texts[sectionIndex];
+        const elem = document.getElementById(sec.id);
+        const rawHTML = sec.content;
+
+        // Se la sezione contiene tag HTML (es. <strong> o <br>) li convertiamo per digitare solo il testo
+        let charIndex = 0;
+
+        function typeChar() {
+          if (charIndex <= rawHTML.length) {
+            // Gestione dei tag HTML per evitare di spezzarli durante il typing
+            if (rawHTML[charIndex] === '<') {
+              charIndex = rawHTML.indexOf('>', charIndex) + 1;
+            }
+
+            elem.innerHTML = rawHTML.substring(0, charIndex);
+
+            // Genera brillantino sopra la posizione della nuova lettera
+            if (charIndex > 0 && charIndex <= rawHTML.length) {
+              spawnCharSparkle(elem);
+            }
+
+            charIndex++;
+            let timeout = setTimeout(typeChar, 35); // Velocità di scrittura
+            typeTimeouts.push(timeout);
+          } else {
+            sectionIndex++;
+            let timeout = setTimeout(typeNextSection, 150);
+            typeTimeouts.push(timeout);
+          }
+        }
+
+        typeChar();
+      }
+
+      typeNextSection();
+    }
+
+    function resetTyping() {
+      typeTimeouts.forEach(t => clearTimeout(t));
+      typeTimeouts = [];
+      texts.forEach(sec => {
+        document.getElementById(sec.id).innerHTML = '';
+      });
+      isTyping = false;
+    }
+
+    // Effetto Brillantino luminoso su ogni lettera scritta
+    function spawnCharSparkle(element) {
+      const rect = element.getBoundingClientRect();
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('magic-sparkle');
+
+      // Posiziona il brillantino nell'area in cui si sta scrivendo
+      const x = rect.left + rect.width * (0.1 + Math.random() * 0.8);
+      const y = rect.top + rect.height * Math.random();
+
+      sparkle.style.left = `${x}px`;
+      sparkle.style.top = `${y}px`;
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 400);
+    }
+
     function createSparkles(e) {
-      const count = 25;
+      const count = 20;
       for (let i = 0; i < count; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
