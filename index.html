@@ -6,11 +6,13 @@
   <title>Regale Invito di Compleanno 👑</title>
   <style>
     :root {
-      --bg-color: #fce4ec;       /* Rosa pastello chiaro */
-      --envelope-color: #f8bbd0; /* Rosa pastello busta */
-      --flap-color: #f48fb1;     /* Rosa lembo busta */
-      --wax-color: #d81b60;      /* Rosa/Rosso ceralacca regale */
-      --text-color: #3e2723;
+      /* Palette Rosa Macaron & Pastello */
+      --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 35%, #e2ece9 70%, #f4acb7 100%);
+      --envelope-color: #fbcfe8; /* Rosa macaron chiaro */
+      --flap-color: #f472b6;     /* Rosa macaron intenso */
+      --pocket-color: #f9a8d4;   /* Rosa macaron intermedio */
+      --wax-color: #db2777;      /* Ceralacca regale */
+      --text-color: #4a154b;
     }
 
     * {
@@ -20,7 +22,8 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      /* Sfondo sfumato effetto acquerello macaron */
+      background: var(--bg-gradient);
       font-family: 'Georgia', serif;
       display: flex;
       flex-direction: column;
@@ -32,28 +35,30 @@
     }
 
     .instruction {
-      margin-bottom: 30px;
-      font-size: 1.2rem;
-      color: #880e4f;
+      margin-bottom: 25px;
+      font-size: 1.25rem;
+      color: #9d174d;
       letter-spacing: 1px;
       font-weight: bold;
       animation: pulse 1.8s infinite;
       text-align: center;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
     }
 
-    /* Contenitore principale della busta */
+    /* Contenitore Busta */
     .envelope-wrapper {
       position: relative;
       width: 320px;
-      height: 220px;
+      height: 210px;
       background-color: var(--envelope-color);
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      box-shadow: 0 15px 35px rgba(219, 39, 119, 0.15);
       cursor: pointer;
+      margin-top: 50px;
     }
 
-    /* Lembo superiore della busta */
+    /* Lembo Superiore Busta */
     .envelope-wrapper::before {
       content: "";
       position: absolute;
@@ -63,108 +68,108 @@
       height: 0;
       border-left: 160px solid transparent;
       border-right: 160px solid transparent;
-      border-top: 120px solid var(--flap-color);
+      border-top: 115px solid var(--flap-color);
       transform-origin: top;
-      transition: transform 0.6s ease-in-out 0.4s, z-index 0.2s 0.4s;
-      z-index: 3;
+      transition: transform 0.6s ease-in-out 0.2s, z-index 0.2s 0.2s;
+      z-index: 4;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
     }
 
-    /* Tasca frontale della busta */
+    /* Tasca Frontale Busta */
     .pocket {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 0;
       height: 0;
-      border-left: 160px solid #f48fb1;
-      border-right: 160px solid #f48fb1;
-      border-bottom: 110px solid #f06292;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+      border-left: 160px solid var(--pocket-color);
+      border-right: 160px solid var(--pocket-color);
+      border-bottom: 110px solid var(--flap-color);
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
       z-index: 3;
     }
 
-    /* Sigillo di ceralacca */
+    /* Sigillo Ceralacca */
     .wax-seal {
       position: absolute;
-      top: 100px;
+      top: 95px;
       left: 50%;
       transform: translateX(-50%);
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       background-color: var(--wax-color);
       border-radius: 50%;
-      z-index: 4;
+      z-index: 5;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #fff;
-      font-size: 22px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: opacity 0.4s ease, transform 0.4s ease;
-      border: 2px dashed #f8bbd0;
+      border: 2px dashed #fbcfe8;
     }
 
-    /* Il biglietto d'invito regale */
+    /* Il Biglietto d'Invito (Completamente nascosto all'inizio) */
     .letter {
       position: absolute;
-      bottom: 10px;
+      top: 5px;
       left: 15px;
       width: 290px;
-      height: 200px;
-      /* Sfondo con la tua immagine di Pinterest */
-      background: linear-gradient(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.78)), 
-                  url('https://i.pinimg.com/736x/21/ef/55/21ef55bead64dbfaad9a5f45df9a2a90.jpg') center/cover no-repeat;
-      border-radius: 8px;
-      padding: 20px 15px;
+      height: 195px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 10px;
+      padding: 18px 15px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-      transition: transform 0.8s ease-in-out, height 0.8s ease-in-out;
-      z-index: 2;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.8s ease-in-out, z-index 0.1s ease 0.4s, opacity 0.4s ease;
+      z-index: 1; /* Sotto la tasca e il lembo */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 2px solid #d81b60;
+      border: 2px solid #f472b6;
       color: var(--text-color);
+      opacity: 0; /* Nascosto inizialmente */
+      overflow: hidden;
     }
 
     .letter .crown {
-      font-size: 1.6rem;
-      margin-bottom: 2px;
+      font-size: 1.5rem;
     }
 
     .letter h1 {
-      font-size: 1.15rem;
-      color: #880e4f;
+      font-size: 1.1rem;
+      color: #831843;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
+      letter-spacing: 1px;
+      margin: 4px 0;
       font-weight: bold;
     }
 
     .letter p {
-      font-size: 0.82rem;
-      line-height: 1.45;
+      font-size: 0.8rem;
+      line-height: 1.4;
       font-style: italic;
     }
 
     .letter .details {
-      background: rgba(255, 240, 245, 0.85);
-      padding: 10px;
-      border-radius: 6px;
-      margin: 10px 0;
-      border: 1px dashed #ad1457;
-      font-size: 0.85rem;
+      background: #fdf2f8;
+      padding: 8px;
+      border-radius: 8px;
+      margin: 8px 0;
+      border: 1px dashed #f472b6;
+      font-size: 0.82rem;
       font-style: normal;
     }
 
     .letter .note {
-      font-size: 0.72rem;
-      color: #5d4037;
+      font-size: 0.7rem;
+      color: #701a75;
       margin-top: 4px;
     }
 
-    /* Stato APERTO dell'animazione */
+    /* ANIMAZIONE APERTURA BUSTA */
     .envelope-wrapper.open::before {
       transform: rotateX(180deg);
       z-index: 1;
@@ -172,14 +177,36 @@
 
     .envelope-wrapper.open .wax-seal {
       opacity: 0;
-      transform: translateX(-50%) scale(0.5);
+      transform: translateX(-50%) scale(0.4);
       pointer-events: none;
     }
 
     .envelope-wrapper.open .letter {
-      transform: translateY(-210px);
-      height: 380px; /* Si estende per mostrare tutto il testo */
-      z-index: 5;
+      opacity: 1;
+      transform: translateY(-160px);
+      height: 350px; /* Esce verso l'alto e si ingrandisce */
+      z-index: 10;   /* Va SOPRA la busta */
+    }
+
+    /* Brillantini e Scia Magica */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      background: radial-gradient(circle, #fff 20%, #f472b6 100%);
+      border-radius: 50%;
+      animation: animateSparkle 1s linear forwards;
+      z-index: 20;
+    }
+
+    @keyframes animateSparkle {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+      }
     }
 
     @keyframes pulse {
@@ -200,17 +227,17 @@
       <div>
         <div class="crown">👑✨</div>
         <h1>Per Regale Decreto</h1>
-        <p>Siete ufficialmente invitati a partecipare al raffinato <strong>Brunch di Compleanno</strong> in mio onore.</p>
+        <p>Siete ufficialmente invitati al raffinato <strong>Brunch di Compleanno</strong> in mio onore.</p>
       </div>
       
       <div class="details">
         <p>📅 <strong>Giorno di Gala:</strong> Domenica 20 Settembre</p>
-        <p>📍 <strong>Residenza:</strong> [Reggia Celeste a Vittime di Peteano, Reame di Fiumicello]</p>
-        <p>⏰ <strong>Ora d'Inizio:</strong> [10:30]</p>
+        <p>📍 <strong>Residenza:</strong> Reggia Celeste a Vittime di Peteano, Reame di Fiumicello</p>
+        <p>⏰ <strong>Ora d'Inizio:</strong> 10:30</p>
       </div>
 
       <div>
-        <p style="margin-bottom: 6px;">✨ <em>«L'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»</em> ✨</p>
+        <p style="margin-bottom: 4px;">✨ <em>«L'unico prezioso dono richiesto alla Vostra presenza è la Vostra nobilissima persona.»</em> ✨</p>
         <p class="note">Un messo reale farà visita alle vostre dimore per raccogliere la risposta... ma nell'attesa, è gradita una conferma via messaggistica di corte! 😉</p>
       </div>
     </div>
@@ -220,14 +247,47 @@
     const envelope = document.getElementById('envelope');
     const hint = document.getElementById('text-hint');
 
-    envelope.addEventListener('click', () => {
+    envelope.addEventListener('click', (e) => {
       envelope.classList.toggle('open');
+      
+      // Crea scia di brillantini magici
+      createSparkles(e);
+
       if (envelope.classList.contains('open')) {
         hint.textContent = '✨ Vostra Altezza vi ringrazia ✨';
       } else {
         hint.textContent = '👑 Clicca per aprire il Regale Decreto 👑';
       }
     });
+
+    function createSparkles(e) {
+      const count = 30; // Numero di brillantini
+      for (let i = 0; i < count; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        
+        const size = Math.random() * 8 + 4; // Dimensione casule
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+
+        // Posizione iniziale attorno al punto del click
+        sparkle.style.left = `${e.clientX || window.innerWidth/2}px`;
+        sparkle.style.top = `${e.clientY || window.innerHeight/2}px`;
+
+        // Direzione casuale della scia
+        const dx = (Math.random() - 0.5) * 200;
+        const dy = (Math.random() - 0.5) * 200;
+        sparkle.style.setProperty('--dx', `${dx}px`);
+        sparkle.style.setProperty('--dy', `${dy}px`);
+
+        document.body.appendChild(sparkle);
+
+        // Rimuove i brillantini dopo l'animazione
+        setTimeout(() => {
+          sparkle.remove();
+        }, 1000);
+      }
+    }
   </script>
 
 </body>
