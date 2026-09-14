@@ -15,6 +15,7 @@
       --bg-gradient: linear-gradient(135deg, #fde2e4 0%, #f7d6e0 40%, #e2ece9 75%, #f4acb7 100%);
       --scroll-paper: #fcf8f2;   /* Colore guscio d'uovo / pergamena */
       --scroll-border: #e8d5c4;  /* Bordo sfumato pergamena */
+      --pastel-pink-cord: #f4a261;
       --text-color: #3b0764;
       --accent-gold: #9d174d;
     }
@@ -70,7 +71,7 @@
       border: 1px solid #d4beaa;
     }
 
-    /* Spirale laterale per simulare il foglio arrotolato su se stesso */
+    /* Spirale laterale per simulare il foglio arrotolato */
     .paper-roll::before, .paper-roll::after {
       content: '';
       position: absolute;
@@ -96,42 +97,42 @@
       border-right: 3px double var(--scroll-border);
       box-shadow: inset 0 0 20px rgba(216, 194, 170, 0.3);
       overflow: hidden;
-      transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Srotolamento rallentato a 2 secondi per maggiore imponenza */
+      transition: height 2s cubic-bezier(0.25, 1, 0.5, 1);
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 0 20px;
     }
 
-    /* Cordoncino attorno alla pergamena chiusa */
+    /* Cordoncino Verticale Rosa Pastello */
     .cord {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 325px;
-      height: 18px;
-      background: repeating-linear-gradient(
-        45deg,
-        #f472b6,
-        #f472b6 8px,
-        #fbbf24 8px,
-        #fbbf24 16px
-      );
-      border-radius: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      width: 14px;
+      height: 58px;
+      background: linear-gradient(90deg, #fbcfe8, #f472b6, #fbcfe8);
+      border-radius: 7px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       z-index: 10;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      border: 1px solid #f472b6;
     }
 
-    /* Fiocco centrale del cordoncino */
+    /* Fiocchetto rosa pastello al centro del cordoncino */
     .cord::after {
-      content: '🎀';
-      font-size: 22px;
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -55%);
+      transform: translate(-50%, -50%);
+      width: 22px;
+      height: 14px;
+      background: #f472b6;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
     /* Contenuto del Testo */
@@ -195,36 +196,36 @@
 
     .scroll-container.open .cord {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.5);
+      transform: translate(-50%, -50%) scale(0.3);
       pointer-events: none;
     }
 
-    /* Brillantino sulla Lettera in corso di Scrittura */
+    /* Micro-Brillantini Densi Bianco/Oro Perlato per la scrittura */
     .magic-sparkle {
       position: fixed;
       pointer-events: none;
-      width: 10px;
-      height: 10px;
-      background: radial-gradient(circle, #ffffff 20%, #f472b6 60%, transparent 100%);
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, #ffffff 30%, #fef08a 70%, #f59e0b 100%);
       border-radius: 50%;
-      box-shadow: 0 0 10px #f472b6, 0 0 18px #fbbf24;
-      animation: magicGlow 0.4s ease-out forwards;
+      box-shadow: 0 0 4px #ffffff, 0 0 8px #fef08a;
+      animation: magicGlow 0.45s ease-out forwards;
       z-index: 100;
     }
 
     @keyframes magicGlow {
-      0% { transform: scale(0.3) rotate(0deg); opacity: 1; }
-      50% { transform: scale(1.8) rotate(180deg); opacity: 1; }
+      0% { transform: scale(0.4) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.6) rotate(180deg); opacity: 0.9; }
       100% { transform: scale(0) rotate(360deg); opacity: 0; }
     }
 
-    /* Brillantini generici al click */
+    /* Brillantini decorativi al tocco */
     .sparkle {
       position: absolute;
       pointer-events: none;
-      background: radial-gradient(circle, #fff 10%, #f472b6 100%);
+      background: radial-gradient(circle, #ffffff 30%, #fde047 100%);
       border-radius: 50%;
-      animation: animateSparkle 1s linear forwards;
+      animation: animateSparkle 0.9s linear forwards;
       z-index: 20;
     }
 
@@ -248,7 +249,7 @@
     <!-- Rotolo Superiore -->
     <div class="paper-roll"></div>
 
-    <!-- Cordoncino -->
+    <!-- Cordoncino Verticale Rosa Pastello -->
     <div class="cord"></div>
 
     <!-- Foglio della Pergamena -->
@@ -278,7 +279,6 @@
     const scrollContainer = document.getElementById('scroll');
     const hint = document.getElementById('text-hint');
 
-    // Testi divisi per sezione
     const texts = [
       { id: 'text-h1', content: 'Per Regale Decreto' },
       { id: 'text-sub', content: 'Siete cordialmente invitati al raffinato Brunch di Compleanno in mio onore.' },
@@ -297,10 +297,10 @@
         scrollContainer.classList.add('open');
         hint.textContent = 'Vostra Altezza vi ringrazia';
         
-        // Avvia la scrittura magica lettera per lettera dopo lo srotolamento (1 sec)
+        // Attende la conclusione dello srotolamento lento (2 sec) per far partire la scrittura magica
         setTimeout(() => {
           startMagicTyping();
-        }, 1000);
+        }, 1900);
 
       } else {
         scrollContainer.classList.remove('open');
@@ -309,7 +309,7 @@
       }
     });
 
-    // Funzione Scrittura Magica con Brillantini
+    // Scrittura Magica con Micro-Scintille Dense Bianco/Oro Perlato
     function startMagicTyping() {
       resetTyping();
       isTyping = true;
@@ -326,25 +326,24 @@
         const elem = document.getElementById(sec.id);
         const rawHTML = sec.content;
 
-        // Se la sezione contiene tag HTML (es. <strong> o <br>) li convertiamo per digitare solo il testo
         let charIndex = 0;
 
         function typeChar() {
           if (charIndex <= rawHTML.length) {
-            // Gestione dei tag HTML per evitare di spezzarli durante il typing
+            // Ignora i tag HTML per non romperli nel rendering
             if (rawHTML[charIndex] === '<') {
               charIndex = rawHTML.indexOf('>', charIndex) + 1;
             }
 
             elem.innerHTML = rawHTML.substring(0, charIndex);
 
-            // Genera brillantino sopra la posizione della nuova lettera
+            // Genera una nuvoletta densa di 3 micro-brillantini dorati/bianchi per ogni lettera
             if (charIndex > 0 && charIndex <= rawHTML.length) {
-              spawnCharSparkle(elem);
+              spawnCharSparkles(elem, 3);
             }
 
             charIndex++;
-            let timeout = setTimeout(typeChar, 35); // Velocità di scrittura
+            let timeout = setTimeout(typeChar, 35);
             typeTimeouts.push(timeout);
           } else {
             sectionIndex++;
@@ -368,41 +367,47 @@
       isTyping = false;
     }
 
-    // Effetto Brillantino luminoso su ogni lettera scritta
-    function spawnCharSparkle(element) {
+    // Generatore di Micro-Brillantini Densi vicino al punto di scrittura
+    function spawnCharSparkles(element, count) {
       const rect = element.getBoundingClientRect();
-      const sparkle = document.createElement('div');
-      sparkle.classList.add('magic-sparkle');
+      
+      for (let i = 0; i < count; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('magic-sparkle');
 
-      // Posiziona il brillantino nell'area in cui si sta scrivendo
-      const x = rect.left + rect.width * (0.1 + Math.random() * 0.8);
-      const y = rect.top + rect.height * Math.random();
+        // Piccola dispersione attorno alla lettera stampata
+        const offsetX = (Math.random() - 0.5) * 16;
+        const offsetY = (Math.random() - 0.5) * 12;
 
-      sparkle.style.left = `${x}px`;
-      sparkle.style.top = `${y}px`;
+        const x = rect.left + rect.width * (0.1 + Math.random() * 0.8) + offsetX;
+        const y = rect.top + rect.height * Math.random() + offsetY;
 
-      document.body.appendChild(sparkle);
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
 
-      setTimeout(() => {
-        sparkle.remove();
-      }, 400);
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => {
+          sparkle.remove();
+        }, 450);
+      }
     }
 
     function createSparkles(e) {
-      const count = 20;
+      const count = 25;
       for (let i = 0; i < count; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
         
-        const size = Math.random() * 6 + 3;
+        const size = Math.random() * 4 + 2; // Brillantini più piccoli
         sparkle.style.width = `${size}px`;
         sparkle.style.height = `${size}px`;
 
         sparkle.style.left = `${e.clientX || window.innerWidth/2}px`;
         sparkle.style.top = `${e.clientY || window.innerHeight/2}px`;
 
-        const dx = (Math.random() - 0.5) * 180;
-        const dy = (Math.random() - 0.5) * 180;
+        const dx = (Math.random() - 0.5) * 160;
+        const dy = (Math.random() - 0.5) * 160;
         sparkle.style.setProperty('--dx', `${dx}px`);
         sparkle.style.setProperty('--dy', `${dy}px`);
 
@@ -410,7 +415,7 @@
 
         setTimeout(() => {
           sparkle.remove();
-        }, 1000);
+        }, 900);
       }
     }
   </script>
